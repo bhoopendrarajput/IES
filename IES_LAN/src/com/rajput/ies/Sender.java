@@ -57,7 +57,7 @@ class ProcessConnection extends Thread {
 			RSA.setPublicExponent(objectReceived);
 			//System.err.println("READ DATA2: "+objectReceived);
 			
-			File file = new File("D:/Bhoopen/IES_LAN/src/FileToBeTransfered.txt");
+			File file = new File("D:/Bhoopen/Bhoopen@Git/IES/test_resources/video.mp4");
 			//File file = new File("D:/Software/HP_LoadRunner1.exe");
 			
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -68,7 +68,6 @@ class ProcessConnection extends Thread {
 			FileInputStream fis = new FileInputStream(file);
 			byte buffer[] = new byte[1024*100];//, plain[], cipher[]; 
 			int size = 0;
-			//byte newBuffer[];
 			final int BUFFER_SIZE=8;//128;
 			final int MIN_BUFFER_SIZE=8;
 			IdeaCipher ideaReciever = new IdeaCipher(new String(toMD5(file.getName())));
@@ -78,40 +77,21 @@ class ProcessConnection extends Thread {
 			byte[]cipher = new byte[BUFFER_SIZE];
 			long newSize=0, lastNewSize=0, total=0;
 			int bufferSizeToBeUsed;
+			long dataProceed=0;
 			while ((size=fis.read(buffer)) > -1) {
 			  bufferSizeToBeUsed = size > BUFFER_SIZE ? BUFFER_SIZE : MIN_BUFFER_SIZE;  
-			  /* newSize = (size+BUFFER_SIZE-size%BUFFER_SIZE);
-			  total+=newSize;
-			  System.err.println("SIZE OF DATA TO BE SENT 2: "+newSize+"/"+total);
-			  if (newSize!=lastNewSize || newBuffer == null) {
-			    newBuffer=new byte[(size+BUFFER_SIZE-size%BUFFER_SIZE)];
-			  } else {
-  			  for (int j=0; j<newSize; j++) {  
-  			    newBuffer[j]=0;  
-  		    }
-			  }
-			  lastNewSize = newSize;*/
 			  newBuffer=new byte[(size+bufferSizeToBeUsed-size%bufferSizeToBeUsed)];
-			  //sb.append(new String(buffer, 0, size));
-			  /*System.err.println("SIZE OF DATA TO BE SENT size: "+size);
-			  System.err.println("SIZE OF DATA TO BE SENT 2: "+newBuffer.length);*/
 			  for (int i =0; i < size; i+=bufferSizeToBeUsed) {
 			    //plain = new byte[BUFFER_SIZE];
 			    cipher = new byte[bufferSizeToBeUsed];
-			    /*for (int j=0; j<BUFFER_SIZE; j++) {  
-			      cipher[j]=0;  
-          }*/
-			    //System.arraycopy(buffer, i, plain, 0, BUFFER_SIZE);
 			    ideaReciever.encrypt(buffer, i, cipher, 0);
 			    System.arraycopy(cipher, 0, newBuffer, i, bufferSizeToBeUsed);
-			    System.err.println("Data Procceed: "+i);
+			    dataProceed += bufferSizeToBeUsed;
+			    System.err.println("Data Procceed: "+dataProceed);
 			  }
 			  out.writeObject(newBuffer);out.flush();
 			  sb.append(newBuffer);
-			  //System.err.println("Sent Data: "+bytesToHex(newBuffer));
-			  //newBuffer=null; System.gc();
 			}
-			System.err.println("data sent: "+sb.toString().length()+"\n"+sb);
 			out.writeObject(new Integer(-1));
 			fis.close();
 			

@@ -43,7 +43,7 @@ public class Reciever {
 			
 			String fileName=new String(RSA.decrypt(objectReceived).toByteArray());
 			IdeaCipher ideaReciever = new IdeaCipher(new String(toMD5(fileName)));
-			File file = new File("D:/Bhoopen/IES_LAN/src/Received_"+fileName);
+			File file = new File("D:/Bhoopen/Bhoopen@Git/IES/test_resources/Received_"+fileName);
 			fos = new FileOutputStream(file);
 			final int BUFFER_SIZE=8;//128;
 			final int MIN_BUFFER_SIZE=8;
@@ -52,6 +52,7 @@ public class Reciever {
       StringBuilder sb = new StringBuilder();
       Object obj;byte[] data;
       int bufferSizeToBeUsed;
+      long dataProceed=0;
 			while(true){
 				try{
 				  obj = ins.readObject();
@@ -59,7 +60,7 @@ public class Reciever {
 				    break;
 				  }
 				  data = (byte[]) obj;
-				  System.out.println("data recieved["+data.length+"]:" +data);
+				  //System.out.println("data recieved["+data.length+"]");
 				  bufferSizeToBeUsed = data.length > BUFFER_SIZE ? BUFFER_SIZE : MIN_BUFFER_SIZE;  
 				  //newBuffer=new byte[data.length];
 				  for (int index = 0; index < data.length; index += bufferSizeToBeUsed) {
@@ -69,8 +70,10 @@ public class Reciever {
 				    deCipher = new byte[bufferSizeToBeUsed];
 				    ideaReciever.decrypt(data, index, deCipher, 0);
 	          //System.arraycopy(deCipher, 0, newBuffer, index, BUFFER_SIZE);
-				    System.out.print(new String(deCipher));
+				    //System.out.print(new String(deCipher));
 	          fos.write(deCipher);fos.flush();
+	          dataProceed += bufferSizeToBeUsed;
+	          System.err.println("Data Procceed: "+(dataProceed));
 	        }
 				  //sb.append(new String(newBuffer));
 				  //fos.write(newBuffer);fos.flush();
