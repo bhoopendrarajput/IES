@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="3dp" >
+
+    <!--
+    android:layout_weight="1"
+    android:layout_weight="1"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_width="fill_parent"
+    android:layout_gravity="top"
+    android:background = "#f00"
+    android:background = "#0f0"
+    
+    -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:gravity="top"
+        android:orientation="horizontal"
+        android:padding="0dp" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:orientation="horizontal"
+            android:padding="0dp" >
+
+            <Button
+                android:id="@+id/upDirectoryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_margin="0dp"
+                android:padding="0dp"
+                android:drawableLeft="@drawable/dir_up"
+                android:textColor="@android:color/white"
+                android:typeface="sans"
+                android:textStyle="bold"
+                
+                android:text="UP" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp" >
+
+            <Button
+                android:id="@+id/cancelBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:gravity="center|center_vertical"
+                android:padding="0dp"
+                android:textColor="@android:color/white"
+                android:typeface="sans"
+                android:textStyle="bold"
+                android:onClick="onClickCancel"
+                android:text="CANCEL" />
+<!-- selectCurrentDirectoryButton -->
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/currentDirectoryTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Current folder: \n" />
+
+    <ListView
+        android:id="@+id/fileListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@null"
+        android:layout_marginTop="5dp"
+        android:cacheColorHint="#00000000"
+        android:layout_weight="1" />
+    
+    <Button
+        android:id="@+id/selectCurrentDirectoryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:gravity="center|center_vertical"
+        android:layout_gravity="center"
+        android:padding="0dp"
+        android:text="SAVE"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:typeface="sans" />
+</LinearLayout>
